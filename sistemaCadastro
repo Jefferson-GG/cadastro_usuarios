@@ -1,0 +1,111 @@
+package loginCadastro;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.List;
+
+public class sistemaDeCadastro {
+        private static List<Usuario> usuarios = new ArrayList<>();
+        private static Scanner scanner = new Scanner(System.in);
+
+        public static void main(String[] args) {
+                int opcao;
+
+                do {
+                        System.out.print("\n --- Selecione uma opção --- ");
+                        System.out.print("\n 1. Cadastrar Usuario");
+                        System.out.print("\n 2. Listar Usuarios");
+                        System.out.print("\n 3. fechar o sistema");
+                        System.out.print("\n Escolha uma opcao: ");
+
+                        opcao = scanner.nextInt();
+                        scanner.nextLine();
+
+                        switch (opcao) {
+
+                                case 1:
+                                        cadastrarUsuario();
+                                        break;
+
+                                case 2:
+                                        consultarUsuario();
+                                        break;
+
+                                case 3:
+                                        System.out.println("fechando...");
+                                        break;
+
+                                default:
+                                        System.out.println("Opção invalida!");
+                        }
+                } while (opcao != 3);
+
+                scanner.close();
+        }
+                private static void cadastrarUsuario () {
+
+                    System.out.println("Digite seu nome de usuario: ");
+                    String nome = scanner.nextLine();
+
+                    String senha;
+                    while (true) {
+                        System.out.println("Digite sua senha de 8 oito digitos: ");
+                        senha = scanner.nextLine();
+
+                        if (senha.isEmpty() || senha.length() != 8) {
+                            System.out.println("Senha invalida!");
+
+                        } else {
+                            System.out.println("Senha cadastrada!");
+
+                            break;
+                        }
+                    }
+
+                    String cpf;
+                    while (true) {
+                        System.out.println("Digite seu cpf: ");
+                        cpf = scanner.nextLine();
+
+                        if (cpf.isEmpty()) {
+                            System.out.println("Erro: O campo CPF nao pode estar vazio!");
+                        } else if (!cpf.matches("\\d{11}")) {
+                            System.out.println("Erro: o CPF informado deve conter 11 números!");
+                        } else {
+                            System.out.println("CPF validado e cadastrado!");
+                            break;
+                        }
+                    }
+
+                    String email;
+                    while (true) {
+                        System.out.println("Digite seu email: ");
+                        email = scanner.nextLine();
+
+                        if (email.isEmpty()) {
+                            System.out.println("Erro: O campo E-mail não pode estar vazio!");
+                        } else if (!email.matches("^(.+)@(.+)$")) {
+                            System.out.println("ERROR: O E-mail é invalido!");
+                        } else {
+                            System.out.println("E-mail validado e cadastrado!");
+                            break;
+                        }
+                    }
+                    Usuario novoUsuario = new Usuario(nome, senha, cpf, email);
+                    usuarios.add(novoUsuario);
+
+                    System.out.println("Cadastro realizado com sucesso!");
+                }
+
+                private static void consultarUsuario() {
+
+                        if (usuarios.isEmpty()) {
+                                System.out.println("Sem usuarios cadastrados!");
+                        }else {
+                                System.out.println("Usuarios cadastrados: ");
+                                for (Usuario usuario : usuarios) {
+                                        System.out.println(usuario);
+                                }
+                        }
+                }
+        }
